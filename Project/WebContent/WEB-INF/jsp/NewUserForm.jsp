@@ -14,12 +14,17 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header>
 	<div class="container">
-		<div class="row">
-			<div class="col-lg text-right">
-				ユーザー名さん <a href="#">ログアウト</a>
-			</div>
+		<ul class="nav navbar-nav navbar-right">
+					<li class="navbar-text">${userInfo.name}さん</li>
+					<li class="dropdown"><a href="LogoutServlet"
+						class="navbar-link logout-link">ログアウト</a></li>
+				</ul>
 		</div>
+		</header>
+
+		<div class="container">
 		<div class="row m-2">
 			<div class="col-lg text-center">
 				<h1>ユーザ新規登録</h1>
