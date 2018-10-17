@@ -1,0 +1,2 @@
+CREATE TABLE user(id SERIAL,login_id varchar(255) UNIQUE Not Null,name varchar(255) NOT NULL,birth_date DATE NOT NULL,password varchar(255) Not Null,create_date DATETIME Not Null,update_date DATETIME Not Null);
+INSERT INTO user(login_id,name,birth_date,password,create_date,update_date) VALUES('admin','çÇñÏê^','1991-09-19','groove','2018-10-12 14:45:30','2018-10-12 14:46:00');
