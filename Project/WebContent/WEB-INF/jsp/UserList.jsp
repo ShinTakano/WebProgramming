@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>フォーム3</title>
+<title>ユーザ一覧</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -32,7 +32,7 @@
 
 	<div class="container">
 		<div class="text-right">
-			<a href="userCreate.html">新規登録</a>
+			<a href="NewUserFormServlet">新規登録</a>
 		</div>
 
 		<form method="post" action="#" class="form-horizontal">
@@ -66,44 +66,33 @@
 				<input type="submit" class="search-submit" value="検索">
 			</div>
 		</form>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th scope="col">ログインＩＤ</th>
-					<th scope="col">ユーザ名</th>
-					<th scope="col">生年月日</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">id0001</th>
-					<td>田中太郎</td>
-					<td>1989年04月26日</td>
-					<td><button type="button" class="btn btn-primary ">詳細</button>
-						<button type="button" class="btn btn-success">更新</button>
-						<button type="button" class="btn btn-danger">削除</button></td>
-				</tr>
-				<tr>
-					<th scope="row">id0002</th>
-					<td>佐藤二朗</td>
-					<td>2001年11月12日</td>
-					<td><button type="button" class="btn btn-primary ">詳細</button>
-						<button type="button" class="btn btn-success">更新</button>
-						<button type="button" class="btn btn-danger">削除</button></td>
-				</tr>
-				<tr>
-					<th scope="row">id0003</th>
-					<td>佐川真司</td>
-					<td>2000年01月01月</td>
-					<td>
-						<button type="button" class="btn btn-primary ">詳細</button>
-						<button type="button" class="btn btn-success">更新</button>
-						<button type="button" class="btn btn-danger">削除</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ログインID</th>
+						<th>ユーザ名</th>
+						<th>生年月日</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="user" items="${UserList}">
+						<tr>
+							<td>${user.loginId}</td>
+							<td>${user.name}</td>
+							<td>${user.birthDate}</td>
+							<!-- TODO 未実装；ログインボタンの表示制御を行う -->
+							<td><a class="btn btn-primary"
+								href="UserDetailServlet?id=${user.id}">詳細</a> <a
+								class="btn btn-success" href="UserUpdateServlet?id=${user.id}">更新</a>
+								<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}">削除</a>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 </html>

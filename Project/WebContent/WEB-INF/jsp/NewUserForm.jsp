@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>フォーム2</title>
+<title>ユーザ新規登録</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -30,39 +30,44 @@
 				<h1>ユーザ新規登録</h1>
 			</div>
 		</div>
-		<form>
+			<c:if test="${errMsg2 != null}" >
+	    <div class="alert alert-danger text-center ">
+		  ${errMsg2}
+		</div>
+	</c:if>
+		<form action ="NewUserFormServlet" method ="post">
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">ログインＩＤ</label>
 				<div class="col-6">
-					<input class="form-control" type="text">
+					<input type="text" name="loginId" class="form-control">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">パスワード</label>
 				<div class="col-6">
-					<input class="form-control" type="password">
+					<input type="password" name="password1" class="form-control">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">パスワード（確認）</label>
 				<div class="col-6">
-					<input class="form-control" type="password">
+					<input type="password" name="password2" class="form-control">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">ユーザ名</label>
 				<div class="col-6">
-					<input class="form-control" type="text">
+					<input type="text" name="name" class="form-control">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">生年月日</label>
 				<div class="col-6">
-					<input class="form-control" type="date">
+					<input type="date" name="birthDate" class="form-control">
 				</div>
 			</div>
 			<div class="text-right">
@@ -70,7 +75,7 @@
 			</div>
 		</form>
 		<div class="text-left">
-			<a href="#">戻る</a>
+			<a href="UserListServlet" onclick="history.back()">戻る</a>
 		</div>
 	</div>
 </body>

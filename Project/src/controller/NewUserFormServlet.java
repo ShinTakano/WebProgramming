@@ -42,13 +42,24 @@ public class NewUserFormServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 
-		String loginid = request.getParameter("loginId");
-		String password = request.getParameter("password");
+		String loginid = request.getParameter("loginId");//jspから取る値（"nameの値"）
+		String password1 = request.getParameter("password1");
+		String password2 = request.getParameter("password2");
 		String name = request.getParameter("name");
 		String birthDate = request.getParameter("birthDate");
-
 		UserDao userDao = new UserDao();
-		userDao.NewUser(loginid, password, name, birthDate);
+		 boolean b = userDao.finduserinfo(loginid);
+		if(!password1 .equals(password2) || "".equals(loginid) || "" .equals(password1) || "".equals(password2) ||
+				"".equals(name)|| "".equals(birthDate)|| b == true){
+			request.setAttribute("errMsg2", "入力された内容は正しくありません");
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/NewUserForm.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
+
+		userDao.NewUser(loginid, password1, name, birthDate);
 
 		response.sendRedirect("UserListServlet");
 

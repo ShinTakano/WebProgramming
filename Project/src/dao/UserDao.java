@@ -64,6 +64,38 @@ public class UserDao {
 		}
 	}
 
+	public boolean finduserinfo(String loginId) {
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "SELECT * FROM user WHERE login_id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, loginId);
+			ResultSet rs = pStmt.executeQuery();
+
+			if (loginId == null) {
+				return false;
+			}
+			String loginIdData = rs.getString("login_id");
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return false;
+				}
+			}
+		}
+
+	}
+
 	/**
 	 * 全てのユーザ情報を取得する
 	 * @return
@@ -96,6 +128,8 @@ public class UserDao {
 				String updateDate = rs.getString("update_date");
 				User user = new User(id, loginId, name, birthDate, password, createDate, updateDate);
 
+				userList.add(user);
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,7 +153,7 @@ public class UserDao {
 		try {
 			conn = DBManager.getConnection();
 
-			String sql = "INSERT INFO user(login_id,password,name,birth_date,create_date, update_date) value (?,?,?,?,now(),now())";
+			String sql = "INSERT INTO user(login_id,password,name,birth_date,create_date, update_date) VALUES (?,?,?,?,now(),now())";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
