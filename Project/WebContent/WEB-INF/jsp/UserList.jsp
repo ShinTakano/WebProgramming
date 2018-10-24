@@ -83,6 +83,7 @@
 							<td>${user.name}</td>
 							<td>${user.birthDate}</td>
 							<!-- TODO 未実装；ログインボタンの表示制御を行う -->
+							<c:if test=""></c:if>
 							<td><a class="btn btn-primary"
 								href="UserDetailServlet?id=${user.id}">詳細</a> <a
 								class="btn btn-success" href="UserUpdateServlet?id=${user.id}">更新</a>

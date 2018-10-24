@@ -25,31 +25,33 @@
 				<h1>ユーザ情報詳細参照</h1>
 			</div>
 		</div>
+		<c:forEach var="user" items="${UserList}">
 		<div class="row m-4">
 			<div class="col-2"></div>
 			<label class="control-label col-4 text-center">ログインＩＤ</label> <label
-				class="control-label col-4 text-center">id0001</label>
+				class="control-label col-4 text-center">${user.loginId}</label>
 		</div>
 		<div class="row m-4">
 			<div class="col-2"></div>
 			<label class="control-label col-4 text-center">ユーザ名</label> <label
-				class="control-label col-4 text-center">田中太郎</label>
+				class="control-label col-4 text-center">${user.name}</label>
 		</div>
 		<div class="row m-4">
 			<div class="col-2"></div>
 			<label class="control-label col-4 text-center">生年月日</label> <label
-				class="control-label col-4 text-center">1989年04月26日</label>
+				class="control-label col-4 text-center">${user.birthDate}</label>
 		</div>
 		<div class="row m-4">
 			<div class="col-2"></div>
 			<label class="control-label col-4 text-center">登録日時</label> <label
-				class="control-label col-4 text-center">2017年01月01日 10:50</label>
+				class="control-label col-4 text-center">${user.createDate}</label>
 		</div>
 		<div class="row m-4">
 			<div class="col-2"></div>
 			<label class="control-label col-4 text-center">更新日時</label> <label
-				class="control-label col-4 text-center">2017年02月01日 01:05</label>
+				class="control-label col-4 text-center">${user.updateDate}</label>
 		</div>
+		</c:forEach>
 		<br>
 		<br>
 		<div class="text-left"><a href="#">戻る</a></div>

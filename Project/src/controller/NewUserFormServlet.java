@@ -18,18 +18,19 @@ import dao.UserDao;
 public class NewUserFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public NewUserFormServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public NewUserFormServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/NewUserForm.jsp");
 		dispatcher.forward(request, response);
@@ -38,7 +39,8 @@ public class NewUserFormServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 
@@ -48,9 +50,9 @@ public class NewUserFormServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String birthDate = request.getParameter("birthDate");
 		UserDao userDao = new UserDao();
-		 boolean b = userDao.finduserinfo(loginid);
-		if(!password1 .equals(password2) || "".equals(loginid) || "" .equals(password1) || "".equals(password2) ||
-				"".equals(name)|| "".equals(birthDate)|| b == true){
+		boolean b = userDao.finduserinfo(loginid);
+		if (!password1.equals(password2) || "".equals(loginid) || "".equals(password1) || "".equals(password2) ||
+				"".equals(name) || "".equals(birthDate) || b == true) {
 			request.setAttribute("errMsg2", "入力された内容は正しくありません");
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/NewUserForm.jsp");
@@ -58,11 +60,9 @@ public class NewUserFormServlet extends HttpServlet {
 			return;
 		}
 
-
 		userDao.NewUser(loginid, password1, name, birthDate);
 
 		response.sendRedirect("UserListServlet");
-
 
 	}
 }

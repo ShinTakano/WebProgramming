@@ -14,12 +14,12 @@
 </head>
 <body>
 	<div class="container">
-	<c:if test="${errMsg != null}" >
-	    <div class="alert alert-danger" role="alert">
+		<h1 class ="text-center m-4">ログイン画面</h1>
+		<c:if test="${errMsg != null}" >
+	    <div class="alert alert-danger text-center" role="alert">
 		  ${errMsg}
 		</div>
 	</c:if>
-		<h1 class ="text-center m-4">ログイン画面</h1>
 		<br>
 		<form class="form-signin" action="LoginServlet" method="post">
 			<div class="form-group row m-2">

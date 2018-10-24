@@ -34,6 +34,16 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		request.setCharacterEncoding("UTF-8");
+		
+		HttpSession session = request.getSession();
+
+		if(session.getAttribute("userInfo") != null){//ログイン情報がセッションされているかの条件文(資料:3-4-17)
+
+			response.sendRedirect("UserListServlet");//情報がある場合はユーザ一覧画面へリダイレクト
+			return;
+		}
+
 		// TODO 未実装：ログインセッションがある場合、ユーザ一覧画面にリダイレクトさせる
 
 		// フォワード
@@ -47,8 +57,8 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-        // リクエストパラメータの文字コードを指定
-        request.setCharacterEncoding("UTF-8");
+		// リクエストパラメータの文字コードを指定
+		request.setCharacterEncoding("UTF-8");
 
 		// リクエストパラメータの入力項目を取得
 		String loginId = request.getParameter("loginId");
@@ -61,7 +71,7 @@ public class LoginServlet extends HttpServlet {
 		/** テーブルに該当のデータが見つからなかった場合 **/
 		if (user == null) {
 			// リクエストスコープにエラーメッセージをセット
-			request.setAttribute("errMsg", "ログインに失敗しました。");
+			request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
 
 			// ログインjspにフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
@@ -72,7 +82,7 @@ public class LoginServlet extends HttpServlet {
 		/** テーブルに該当のデータが見つかった場合 **/
 		// セッションにユーザの情報をセット
 		HttpSession session = request.getSession();
-		session.setAttribute("userInfo", user);
+		session.setAttribute("userInfo", user);//ログイン情報を保存
 
 		// ユーザ一覧のサーブレットにリダイレクト
 		response.sendRedirect("UserListServlet");

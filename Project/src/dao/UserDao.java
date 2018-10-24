@@ -64,6 +64,10 @@ public class UserDao {
 		}
 	}
 
+
+
+
+
 	public boolean finduserinfo(String loginId) {
 		Connection conn = null;
 		try {
@@ -110,8 +114,7 @@ public class UserDao {
 
 			// SELECT文を準備
 			// TODO: 未実装：管理者以外を取得するようSQLを変更する
-			String sql = "SELECT * FROM user";
-
+			String sql = "SELECT * FROM user WHERE login_id<>'admin'";
 			// SELECTを実行し、結果表を取得
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
