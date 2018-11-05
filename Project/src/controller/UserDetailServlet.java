@@ -1,8 +1,8 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,10 +42,16 @@ public class UserDetailServlet extends HttpServlet {
 
 
 		// TODO  未実装：idを引数にして、idに紐づくユーザ情報を出力する
-		UserDao userDao = new UserDao();
-		List<User> userList = userDao.findAll();
+		UserDao userDao = new UserDao();//コンストラクタ
+		User user = userDao.UserId(id);
+
+
 
 		// TODO  未実装：ユーザ情報をリクエストスコープにセットしてjspにフォワード
+		request.setAttribute("UserId", user);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/User.jsp");
+		dispatcher.forward(request, response);
 
 	}
 

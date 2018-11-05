@@ -24,7 +24,7 @@ public class UserDao {
 	 * @param password
 	 * @return
 	 */
-	public User findByLoginInfo(String loginId, String password) {
+	public User findByLoginInfo(String loginId, String password) {//ログイン時の情報メソッド
 		Connection conn = null;
 		try {
 			// データベースへ接続
@@ -68,7 +68,7 @@ public class UserDao {
 
 
 
-	public boolean finduserinfo(String loginId) {
+	public boolean finduserinfo(String loginId) {//IDがログイン状態かログアウト状態かメソッド
 		Connection conn = null;
 		try {
 			conn = DBManager.getConnection();
@@ -151,7 +151,7 @@ public class UserDao {
 		return userList;
 	}
 
-	public void NewUser(String loginId, String password, String name, String birhDate) {
+	public void NewUser(String loginId, String password, String name, String birhDate) {//新規登録のメソッド
 		Connection conn = null;
 		try {
 			conn = DBManager.getConnection();
@@ -163,7 +163,7 @@ public class UserDao {
 			pStmt.setString(2, password);
 			pStmt.setString(3, name);
 			pStmt.setString(4, birhDate);
-			int rs = pStmt.executeUpdate();
+			int rs = pStmt.executeUpdate();//データの追加
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,6 +179,104 @@ public class UserDao {
 				}
 			}
 		}
+	}
+	//一つのユーザ情報を取得するメソッド
+	public User UserId(String id) {
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
 
+			String sql = "SELECT * from user WHERE id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,id);
+			ResultSet rs = pStmt.executeQuery();
+
+			if(!rs.next()) {//主キーに紐づいているのは1件のみなので、あるかないかの結果。
+				return null;//結果がない場合
+			}
+			//結果がある場合
+			int idData = Integer.parseInt(id);
+			String loginIdData = rs.getString("login_id");
+			String nameData = rs.getString("name");
+			Date birthdateData = rs.getDate("birth_date");
+			String createdateData = rs.getString("create_date");
+			String updateData = rs.getString("update_date");
+			return new User(idData, loginIdData, nameData,birthdateData,createdateData,updateData, updateData);
+
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+	}
+	//一つのユーザ情報を編集するメソッド
+	public void UserUpdate(String id,String name,String password,String birthdate) {//更新メソッド戻り値なし
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "UPDATE user SET name = ?,password = ?,birth_date = ? WHERE id = ?";//「?」は左から昇順になっている
+					//SET・・変えたいカラム名 WHERE・・・特定するカラム名（主キーかユニークを使うのが一般）
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, name);
+			pStmt.setString(2, password);
+			pStmt.setString(3, birthdate);
+			pStmt.setString(4, id);
+			int rs = pStmt.executeUpdate();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
+	}
+	//パスワード以外を更新するメソッド
+	public void UserUpdate2(String id,String name,String birthdate) {//更新メソッド戻り値なし
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "UPDATE user SET name = ?,birth_date = ? WHERE id = ?";//「?」は左から昇順になっている
+					//SET・・変えたいカラム名 WHERE・・・特定するカラム名（主キーかユニークを使うのが一般）
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, name);
+			pStmt.setString(2, birthdate);
+			pStmt.setString(3, id);
+			int rs = pStmt.executeUpdate();
+
+		}catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+
+				}
+			}
+		}
 	}
 }

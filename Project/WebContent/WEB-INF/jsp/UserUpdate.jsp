@@ -17,7 +17,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg text-right">
-				ユーザー名さん <a href="#">ログアウト</a>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="navbar-text">${userInfo.name}さん</li>
+					<li class="dropdown"><a href="LogoutServlet"
+						class="navbar-link logout-link">ログアウト</a></li>
+				</ul>
 			</div>
 		</div>
 		<div class="row m-2">
@@ -25,37 +29,43 @@
 				<h1>ユーザ情報更新</h1>
 			</div>
 		</div>
+		<c:if test="${errMsg2 != null}" >
+	    <div class="alert alert-danger text-center ">
+		  ${errMsg2}
+		</div>
+	</c:if>
 		<div class="row m-4">
 			<div class="col-2"></div>
 			<label class="control-label col-4">ログインＩＤ</label> <label
-				class="control-label col-4 text-center">id0001</label>
+				class="control-label col-4 text-center">${UserId.loginId}</label>
 		</div>
-		<form>
+		<form action ="UpdateServlet" method ="post">
+		<input type ="hidden" name ="id" value ="${UserId.id }">
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">パスワード</label>
 				<div class="col-6">
-					<input class="form-control" type="password">
+					<input type="password" name="password1" class="form-control">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">パスワード（確認）</label>
 				<div class="col-6">
-					<input class="form-control" type="password">
+					<input type="password" name="password2" class="form-control">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">ユーザ名</label>
 				<div class="col-6">
-					<input class="form-control" type="text">
+					<input type="text" name="name" class="form-control" value = "${UserId.name}">
 				</div>
 			</div>
 			<br>
 			<div class="form-group row m-2">
 				<label class="control-label col-4 text-center">生年月日</label>
 				<div class="col-6">
-					<input class="form-control" type="date">
+					<input type="date" name="birthDate" class="form-control" value = "${UserId.birthDate}">
 				</div>
 			</div>
 			<br>
@@ -64,7 +74,7 @@
 		</form>
 		<br>
 		<div class="text-left">
-			<a href="#">戻る</a>
+			<a href="UserListServlet" onclick="history.back()">戻る</a>
 		</div>
 	</div>
 </body>
