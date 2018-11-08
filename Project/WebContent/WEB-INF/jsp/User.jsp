@@ -55,9 +55,10 @@
 			<label class="control-label col-4 text-center">更新日時</label> <label
 				class="control-label col-4 text-center">${UserId.updateDate}</label>
 		</div>
-		<br>
-		<br>
-		<div class="text-left"><a href="#">戻る</a></div>
+		<br> <br>
+		<div class="text-left">
+			<a href="UserListServlet" onclick="history.back()">戻る</a>
+		</div>
 	</div>
 </body>
 </html>

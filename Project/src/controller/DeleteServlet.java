@@ -14,16 +14,16 @@ import dao.UserDao;
 import model.User;
 
 /**
- * Servlet implementation class UserDetailServlet
+ * Servlet implementation class DeleteServlet
  */
-@WebServlet("/UserDetailServlet")
-public class UserDetailServlet extends HttpServlet {
+@WebServlet("/DeleteServlet")
+public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserDetailServlet() {
+    public DeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,38 +32,40 @@ public class UserDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-
+		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 
 		if(session.getAttribute("userInfo") == null){//ログイン情報がセッションされているかの条件文(資料:3-4-17)
 
-			response.sendRedirect("LoginServlet");//情報がない場合はログイン画面へリダイレクト
+			response.sendRedirect("LoginServlet");//情報がある場合はユーザ一覧画面へリダイレクト
 			return;
 		}
 
-
-		// URLからGETパラメータとしてIDを受け取る
 		String id = request.getParameter("id");
 
-		// 確認用：idをコンソールに出力
 		System.out.println(id);
 
-
-		// TODO  未実装：idを引数にして、idに紐づくユーザ情報を出力する
-		UserDao userDao = new UserDao();//コンストラクタ
+		UserDao userDao = new UserDao();
 		User user = userDao.UserId(id);
 
-
-
-		// TODO  未実装：ユーザ情報をリクエストスコープにセットしてjspにフォワード
 		request.setAttribute("UserId", user);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/User.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Delete.jsp");
 		dispatcher.forward(request, response);
-
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		String id = request.getParameter("id");
+
+		UserDao userdao = new UserDao();
+		
+		userdao.UserDelete(id);
+		response.sendRedirect("UserListServlet");
+	}
 
 }

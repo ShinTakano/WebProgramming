@@ -70,7 +70,7 @@
 			</div>
 			<br>
 			<div class="text-center">
-			<button type="submit" class="btn btn-link">登録</button></div>
+			<button type="submit"  class="btn btn-primary">登録</button></div>
 		</form>
 		<br>
 		<div class="text-left">

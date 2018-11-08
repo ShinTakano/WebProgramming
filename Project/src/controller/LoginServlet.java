@@ -1,6 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
 
 import dao.UserDao;
 import model.User;
@@ -35,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-		
+
 		HttpSession session = request.getSession();
 
 		if(session.getAttribute("userInfo") != null){//ログイン情報がセッションされているかの条件文(資料:3-4-17)
@@ -66,7 +71,19 @@ public class LoginServlet extends HttpServlet {
 
 		// リクエストパラメータの入力項目を引数に渡して、Daoのメソッドを実行
 		UserDao userDao = new UserDao();
-		User user = userDao.findByLoginInfo(loginId, password);
+		String source = password;
+		Charset charset = StandardCharsets.UTF_8;
+		String algorithm = "MD5";
+		byte[] bytes = null;
+		try {
+			bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String result = DatatypeConverter.printHexBinary(bytes);
+
+		User user = userDao.findByLoginInfo(loginId, result);
 
 		/** テーブルに該当のデータが見つからなかった場合 **/
 		if (user == null) {
@@ -80,6 +97,8 @@ public class LoginServlet extends HttpServlet {
 		}
 
 		/** テーブルに該当のデータが見つかった場合 **/
+
+
 		// セッションにユーザの情報をセット
 		HttpSession session = request.getSession();
 		session.setAttribute("userInfo", user);//ログイン情報を保存

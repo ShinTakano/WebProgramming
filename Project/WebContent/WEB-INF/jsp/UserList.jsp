@@ -35,31 +35,27 @@
 			<a href="NewUserFormServlet">新規登録</a>
 		</div>
 
-		<form method="post" action="#" class="form-horizontal">
+		<form method="post" action="UserListServlet">
 			<div class="form group row m-3">
 				<label for="code" class="control-label col-2">ログインＩＤ</label>
 				<div class="col-7">
-					<input type="text" name="login-id" id="login-id"
-						class="form-control" />
+					<input type="text" name="loginid" class="form-control" />
 				</div>
 			</div>
 			<div class="form group row m-3">
 				<label class="control-label col-2">ユーザー名</label>
 				<div class="col-7">
-					<input type="text" name="user-name" id="user-name"
-						class="form-control" />
+					<input type="text" name="name" class="form-control" />
 				</div>
 			</div>
 			<div class="form group row m-3">
 				<label class="control-label col-2">生年月日</label>
 				<div class="col-3">
-					<input type="date" name="date-start" id="date-start"
-						class="form-control" />
+					<input type="date" name="birthdate1" class="form-control" />
 				</div>
 				<label class="control-label col-1">～</label>
 				<div class="col-3">
-					<input type="date" name="date-end" id="date-end"
-						class="form-control" />
+					<input type="date" name="birthdate2" class="form-control" />
 				</div>
 			</div>
 			<div class="text-right">
@@ -89,7 +85,7 @@
 								<a
 								class="btn btn-success" href="UpdateServlet?id=${user.id}">更新</a></c:if>
 								<c:if test="${userInfo.loginId =='admin'}">
-								<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}">削除</a>
+								<a class="btn btn-danger" href="DeleteServlet?id=${user.id}">削除</a>
 								</c:if>
 							</td>
 						</tr>

@@ -1,6 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.bind.DatatypeConverter;
 
 import dao.UserDao;
 import model.User;
@@ -33,6 +39,15 @@ public class UpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//ユーザ情報の取得
+
+		HttpSession session = request.getSession();
+
+		if(session.getAttribute("userInfo") == null){//ログイン情報がセッションされているかの条件文(資料:3-4-17)
+
+			response.sendRedirect("LoginServlet");//情報がない場合はログイン画面へリダイレクト
+			return;
+		}
+
 
 		String id = request.getParameter("id");
 
@@ -71,8 +86,20 @@ public class UpdateServlet extends HttpServlet {
 			response.sendRedirect("UserListServlet");
 			return;
 		}
+		//暗号化(処理が正常にされる前に、暗号化処理を行う。
+				String source = password1;
+				Charset charset = StandardCharsets.UTF_8;
+				String algorithm = "MD5";
+				byte[] bytes = null;
+				try {
+					bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+				} catch (NoSuchAlgorithmException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				String result = DatatypeConverter.printHexBinary(bytes);
 
-		userdao.UserUpdate(id, name, password1, birthdate);
+		userdao.UserUpdate(id, name, result, birthdate);
 		response.sendRedirect("UserListServlet");
 	}
 
